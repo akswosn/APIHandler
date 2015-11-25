@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="map">	
+	<typeAlias alias="poiMap" type="com.flk.safety.map.vo.POIMapVO"/>
+	<typeAlias alias="guMap" type="com.flk.safety.map.vo.GUMapVO"/>
+	<typeAlias alias="param" type="com.flk.safety.map.vo.MapParam"/>
+	<typeAlias alias="guCategory" type="com.flk.safety.map.vo.GuCategoryVO"/>
+
+	<statement id="selectPoiMapData" resultClass="poiMap" parameterClass="param">
+		select id, latitude, longitude, category, rating, title, address, high_category
+		from v_poi_data
+		where CONVERT(latitude, binary) between CONVERT(#latitude#, binary) - #latRange#
+				and  CONVERT(#latitude#, binary) + #lngRange#
+			and CONVERT(longitude, binary) between CONVERT(#longitude#, binary) - #latRange# 
+				and  CONVERT(#longitude#, binary) + #lngRange#
+	</statement>	
+	<statement id="selectGuMapData" resultClass="guMap" parameterClass="param">
+		select location_no as code_no, latitude, longitude, location, ifnull(range_crime_id, 0) as range_crime_id
+			, range_crime_rating , ifnull(range_environment_id, 0) as range_environment_id
+			, range_environment_rating , ifnull(range_traffic_id, 0) as range_traffic_id, range_traffic_rating
+			, range_crime_category, range_environment_category, range_traffic_category
+		from v_range_data 
+		where CONVERT(latitude, binary) between CONVERT(#latitude#, binary) - #latRange#
+				and  CONVERT(#latitude#, binary) + #lngRange#
+			and CONVERT(longitude, binary) between CONVERT(#longitude#, binary) - #latRange# 
+				and  CONVERT(#longitude#, binary) + #lngRange#
+	</statement>
+	
+	<statement id="selectGuCategoryData" resultClass="guCategory">
+		select category, category_name, high_category_name
+		FROM tb_category
+		where category like 'range_%'
+	</statement>
+</sqlMap>

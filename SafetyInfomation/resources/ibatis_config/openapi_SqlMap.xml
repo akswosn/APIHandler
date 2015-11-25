@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="openapi">	
+	<typeAlias alias="environmentVO" type="com.flk.safety.detail.vo.Range_EnvironmentVO"/>
+	
+	<select id="selectEnvironment" resultClass="environmentVO">
+		select c.category_name, name, measurement_date, atmosphere, atmosphere_rating
+			, substance, nitrogen_dioxide, ozone, carbon_monoxide, sourcesulfur_dioxide
+			, dust, source
+		from tb_range_environment e, tb_category c
+		where e.category = c.category
+	</select>
+</sqlMap>

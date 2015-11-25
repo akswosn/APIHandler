@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+    <settings
+       enhancementEnabled="true"
+       useStatementNamespaces="true"  
+   	/>
+	<properties resource="db.properties"/>
+	
+   	<transactionManager type="JDBC" >
+        <dataSource type="SIMPLE">
+	       	<property name="JDBC.Driver" value="com.mysql.jdbc.Driver"/>
+	       	<property name="JDBC.ConnectionURL" value="${URL}"/>
+	       	<property name="JDBC.Username" value="${ID}"/>
+	       	<property name="JDBC.Password" value="${PASSWD}"/>
+	       	
+	       	<property name="initialSize" value="${INITIALSIZE}"/>
+			<property name="maxActive" value="${MAXACTIVE}"/>
+			<property name="maxIdle" value="${MAXIDLE}"/>
+			<property name="minIdle" value="${MINIDLE}"/>
+	       	
+			<property name="testOnBorrow" value="${TESTONBORROW}"/>
+			<property name="testWhileIdle" value="${TESTWHILEIDLE}"/>
+	       	<property name="maximumWait" value="${MAXIMUMWAIT}"/>
+			<property name="validationQuery" value="${VALIDATIONQUERY}"/>
+			<property name="testWhileIdle" value="${TESTWHILEIDLE}"/>
+			<property name="timeBetweenEvictionRunsMillis" value="${TIMEBETWEENEVICTIONRUNSMILLIS}"/>
+        </dataSource>
+   	</transactionManager>
+  	
+  	<sqlMap resource="ibatis_config/map_SqlMap.xml"/>
+  	<sqlMap resource="ibatis_config/detail_SqlMap.xml"/>
+  	<sqlMap resource="ibatis_config/openapi_SqlMap.xml"/>
+	
+</sqlMapConfig>

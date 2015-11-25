@@ -1,0 +1,3 @@
+# position set job plan : none
+#* * * * * /home/safety/demon/safetyInfomationPositionSet/SafetyInfomationPositionSet.sh
+

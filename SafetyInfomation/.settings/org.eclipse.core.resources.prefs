@@ -1,0 +1,19 @@
+#Fri Oct 19 14:44:07 KST 2012
+eclipse.preferences.version=1
+encoding//WebApps/js/app/mapMode.js=UTF-8
+encoding//WebApps/mapMode/mapPositionErr.jsp=UTF-8
+encoding//src/com/flk/safety/common/BaseAction.java=UTF-8
+encoding//src/com/flk/safety/common/CommUtils.java=UTF-8
+encoding//src/com/flk/safety/common/Constant.java=UTF-8
+encoding//src/com/flk/safety/common/HexUtils.java=UTF-8
+encoding//src/com/flk/safety/common/SafetyInfomationListener.java=UTF-8
+encoding//src/com/flk/safety/common/SqlMapClientFactory.java=UTF-8
+encoding//src/com/flk/safety/map/action/MapModeAction.java=UTF-8
+encoding//src/com/flk/safety/map/dao/MapModeDAO.java=UTF-8
+encoding//src/com/flk/safety/map/service/MapModeService.java=UTF-8
+encoding//src/com/flk/safety/map/vo/BaseVO.java=UTF-8
+encoding//src/com/flk/safety/map/vo/GUMapVO.java=UTF-8
+encoding//src/com/flk/safety/map/vo/POIMapVO.java=UTF-8
+encoding//src/log4j.properties=UTF-8
+encoding/<project>=UTF-8
+encoding/src=UTF-8

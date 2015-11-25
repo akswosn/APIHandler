@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Daemon">	
+	<typeAlias alias="environmentVo" type="com.flk.seoulapi.vo.RangeEnvironmentVO"/>
+	<typeAlias alias="certificationnVo" type="com.flk.seoulapi.vo.FoodCertificationVO"/>
+	<typeAlias alias="weatherVo" type="com.flk.seoulapi.vo.RangeWeatherVO"/>
+	
+	<statement id="insertEnvironment" parameterClass="environmentVo">
+		insert into tb_range_environment(
+			CATEGORY
+			,LOCATION_NO
+			,NAME
+			,MEASUREMENT_DATE
+			,ATMOSPHERE
+			,ATMOSPHERE_RATING
+			,SUBSTANCE
+			,NITROGEN_DIOXIDE
+			,OZONE
+			,CARBON_MONOXIDE
+			,SOURCESULFUR_DIOXIDE
+			,DUST
+			,SOURCE)
+		values(
+			#category#
+			,(select location_no from tb_range_location where sub_location = #location# and location = #si#)
+			,#name#
+			,str_to_date(date_format(#measurementDate#, '%Y%m%d%H%i%s'), '%Y%m%d%H%i%s')
+			,#atmosphere#
+			,#atmosphereRating#
+			,#substance#
+			,#nitrogenDioxide#
+			,#ozone#
+			,#carbonMonoxide#
+			,#sourcesulfurDioxide#
+			,#dust#
+			,#source#
+		)
+	</statement>
+	
+	<update id="updateEnvironment" parameterClass="environmentVo">
+		update tb_range_environment
+		set 
+			CATEGORY = #category#
+			<isNotNull property="measurementDate" prepend=" , ">MEASUREMENT_DATE = str_to_date(date_format(#measurementDate#, '%Y%m%d%H%i%s'), '%Y%m%d%H%i%s')</isNotNull>
+			<isNotNull property="atmosphere" prepend=" , ">ATMOSPHERE = #atmosphere#</isNotNull>
+			<isNotNull property="atmosphereRating" prepend=" , ">ATMOSPHERE_RATING = #atmosphereRating#</isNotNull>
+			<isNotNull property="substance" prepend=" , ">SUBSTANCE = #substance#</isNotNull>
+			<isNotNull property="nitrogenDioxide" prepend=" , ">NITROGEN_DIOXIDE = #nitrogenDioxide#</isNotNull>
+			<isNotNull property="ozone" prepend=" , ">OZONE = #ozone#</isNotNull>
+			<isNotNull property="carbonMonoxide" prepend=" , ">CARBON_MONOXIDE = #carbonMonoxide#</isNotNull>
+			<isNotNull property="sourcesulfurDioxide" prepend=" , ">SOURCESULFUR_DIOXIDE = #sourcesulfurDioxide#</isNotNull>
+			<isNotNull property="dust" prepend=" , ">DUST = #dust#</isNotNull>
+		where LOCATION_NO = (
+			select location_no 
+			from tb_range_location 
+			where sub_location = #location# and location = #si#
+		)
+	</update>
+	
+	<statement id="selectCertificationAsCount" resultClass="int">
+		select count(*)
+		from tb_food_certification
+	</statement>
+	
+	<statement id="deleteCertificationAsAll">
+		truncate table tb_food_certification
+	</statement>
+	
+	<statement id="insertCertification" parameterClass="certificationnVo">
+		insert into tb_food_certification(
+			CATEGORY
+			, NAME
+			, ADDRESS
+			, TEL
+			, SOURCE
+			, LATITUDE
+			, LONGITUDE
+		)
+		values(
+			#category#
+			, #name#
+			, #address#
+			, #tel#
+			, #source#
+			, #latitude#
+			, #longitude#
+		)
+	</statement>
+	
+	<statement id="getWeatherLocationNo" parameterClass="weatherVo" resultClass="int">
+		select location_no
+		from tb_range_location
+		where location = #si#;
+	</statement>
+	
+	<statement id="updateWeather" parameterClass="weatherVo">
+		update tb_range_weather
+		set 
+			CATEGORY = #category#
+			<isNotNull property="frostbite" prepend=" , ">
+				FROSTBITE = #frostbite#
+			</isNotNull>
+			<isNotNull property="decay" prepend=" , ">
+				DECAY = #decay#
+			</isNotNull>
+			<isNotNull property="discomfort" prepend=" , ">
+				DISCOMFORT = #discomfort#
+			</isNotNull>
+			<isNotNull property="ultraviolet_rays" prepend=" , ">
+				ULTRAVIOLET_RAYS = #ultraviolet_rays#
+			</isNotNull>
+			<isNotNull property="temperature" prepend=" , ">
+				TEMPERATURE = #temperature#
+			</isNotNull>
+			<isNotNull property="source" prepend=" , ">
+				SOURCE = #source#
+			</isNotNull>
+		<iterate prepend="where LOCATION_NO in " property="location_no" open="(" conjunction="," close=")">
+			#location_no[]#
+		</iterate>
+	</statement>
+	
+	<statement id="insertWeather" parameterClass="weatherVo">
+		insert into tb_range_weather(
+			CATEGORY
+			, FROSTBITE
+			, DECAY
+			, DISCOMFORT
+			, LOCATION_NO
+			, ULTRAVIOLET_RAYS
+			, TEMPERATURE
+			, SOURCE
+		)
+		values(
+			#category#
+			, #frostbite#
+			, #decay#
+			, #discomfort#
+			, #no#
+			, #ultraviolet_rays#
+			, #temperature#
+			, #source#
+		)
+	</statement>
+	
+</sqlMap>

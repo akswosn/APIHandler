@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="detail">	
+	<typeAlias alias="calamity_Disaster" type="com.flk.safety.detail.vo.Calamity_DisasterVO"/>
+	<typeAlias alias="calamity_Landslide" type="com.flk.safety.detail.vo.Calamity_LandslideVO"/>
+	<typeAlias alias="food_Certification" type="com.flk.safety.detail.vo.Food_CertificationVO"/>
+	<typeAlias alias="food_Origin_Violation" type="com.flk.safety.detail.vo.Food_Origin_ViolationVO"/>
+	<typeAlias alias="food_Sanitary_Violation" type="com.flk.safety.detail.vo.Food_Sanitary_ViolationVO"/>
+	<typeAlias alias="range_Crime" type="com.flk.safety.detail.vo.Range_CrimeVO"/>
+	<typeAlias alias="range_Crime_Chart" type="com.flk.safety.detail.vo.Range_Crime_ChartVO"/>
+	<typeAlias alias="range_Environment" type="com.flk.safety.detail.vo.Range_EnvironmentVO"/>
+	<typeAlias alias="range_Traffic" type="com.flk.safety.detail.vo.Range_TrafficVO"/>
+	<typeAlias alias="range_Weather" type="com.flk.safety.detail.vo.Range_WeatherVO"/>
+	<typeAlias alias="sex_Crime" type="com.flk.safety.detail.vo.Sex_CrimeVO"/>
+	<typeAlias alias="subway_Crime" type="com.flk.safety.detail.vo.Subway_CrimeVO"/>
+	<typeAlias alias="traffic" type="com.flk.safety.detail.vo.TrafficVO"/>
+
+	<statement id="selectTraffic_Jayjolking" resultClass="traffic" parameterClass="int">
+		select id, category, location, latitude, longitude, occurrence, casualties, dead, jungsang, gyengsang, busin, source, year
+		  from tb_traffic
+		 where id=#id#
+	</statement>
+	
+	<statement id="selectTraffic_Children" resultClass="traffic" parameterClass="int">
+		select id, category, location, latitude, longitude, occurrence, casualties, dead, jungsang, gyengsang, busin, source, year
+		  from tb_traffic
+		 where id=#id#
+	</statement>
+	
+	<statement id="selectSubway_Crime" resultClass="subway_Crime" parameterClass="int">
+		select id, category, station, latitude, longitude, theft, sexual_violence, violence, source, year
+		  from tb_subway_crime
+		 where id=#id#
+	</statement>
+	
+	<statement id="selectSubway_CrimeList" resultClass="subway_Crime" parameterClass="int">
+		select a.id id, a.category category, a.station station, a.latitude latitude, a.longitude longitude, 
+				a.theft theft, a.sexual_violence sexual_violence, a.violence violence, a.source source, a.year year
+		  from tb_subway_crime a, tb_subway_crime b
+		 where a.station = b.station
+		   and b.id = #id#
+		 order by year asc
+		 limit 0,4
+	</statement>
+	
+	<statement id="selectSex_Crime" resultClass="sex_Crime" parameterClass="int">
+		select id, category, area, gu, dong, latitude, longitude, count, source, year
+		  from tb_sex_crime
+		 where id=#id#
+	</statement>
+	
+	<statement id="selectSex_CrimeList" resultClass="sex_Crime" parameterClass="int">
+		select a.id id, a.category category, a.area area, a.gu gu, a.dong dong, a.latitude latitude, a.longitude longitude, a.count count, a.source source, a.year year
+		  from tb_sex_crime a, tb_sex_crime b
+		 where b.id=#id#
+		   and a.gu = b.gu
+		   and a.area = b.area
+	</statement>
+	
+	<statement id="selectFood_Certification" resultClass="food_Certification" parameterClass="int">
+		select id, category, name, address, latitude, longitude, tel, source
+		  from tb_food_certification
+		 where id=#id#
+	</statement>
+	
+	<statement id="selectFood_Sanitary_Violation" resultClass="food_Sanitary_Violation" parameterClass="int">
+		select id, category, location, latitude, longitude, type, name, disposal, violation_date, disposal_date, source, year
+		  from tb_food_sanitary_violation
+		 where id=#id#
+	</statement>
+	
+	<statement id="selectFood_Origin_Violation" resultClass="food_Origin_Violation" parameterClass="int">
+		select id, category, address, latitude, longitude, kind, name, agricultural, violations, disposal_date, disposal, authority
+		  from tb_food_origin_violation
+		 where id=#id#
+	</statement>
+	
+	<statement id="selectCalamity_Landslide" resultClass="calamity_Landslide" parameterClass="int">
+		select id, category, location, latitude, longitude, name, demand, rating, survey, source, year
+		  from tb_calamity_landslide
+		 where id=#id#
+	</statement>
+	
+	<statement id="selectRange_Traffic" resultClass="range_Traffic" parameterClass="int">
+		select id, category, a.location_no, indice, source, year, rating, b.location, b.sub_location
+		  from tb_range_traffic a, tb_range_location b
+		 where a.id=#id#
+		   and a.location_no=b.location_no
+	</statement>
+	
+	<statement id="selectRange_TrafficList" resultClass="range_Traffic">
+		select id, category, a.location_no, indice, source, year, rating, b.location, b.sub_location
+		  from tb_range_traffic a, tb_range_location b
+		 where a.location_no=b.location_no
+	</statement>
+	
+	<statement id="selectRange_Crime" resultClass="range_Crime" parameterClass="int">
+		select id, category, a.location_no, larceny, larceny_count, murder, murder_count, robbery, robbery_count, rape, rape_count, violence, violence_count, source, year, rating, b.location, b.sub_location
+		  from tb_range_crime a, tb_range_location b
+		 where id=#id#
+		   and a.location_no=b.location_no
+	</statement>
+	
+	<statement id="selectRange_CrimeList" resultClass="range_Crime_Chart" parameterClass="int">
+		select '1' num,
+			truncate(avg(a.larceny_count),1) larceny_count, concat(b.location, '평균') larceny_location,
+			truncate(avg(a.murder_count),1) murder_count, concat(b.location, '평균') murder_location,
+			truncate(avg(a.robbery_count),1) robbery_count, concat(b.location, '평균') robbery_location,
+			truncate(avg(a.rape_count),1) rape_count, concat(b.location, '평균') rape_location,
+			truncate(avg(a.violence_count),1) violence_count, concat(b.location, '평균') violence_location
+		  from tb_range_crime a, tb_range_location b, tb_range_crime c, tb_range_location d
+		 where a.location_no=b.location_no 
+		   and c.id=#id# 
+		   and d.location_no=c.location_no 
+		   and b.location=d.location 
+		 union
+		select '2' num, round(a.larceny_count, 1), b.sub_location larceny_location, round(a.murder_count, 1), b.sub_location murder_location, round(a.robbery_count, 1), b.sub_location robbery_location, round(a.rape_count, 1), b.sub_location rape_location, round(a.violence_count, 1), b.sub_location violence_location
+		  from tb_range_crime a, tb_range_location b
+		 where a.id=#id# and a.location_no=b.location_no
+		 union
+		select '3' num, round(min(a.larceny_count), 1) larceny_count, 
+			(select b1.sub_location
+			   from tb_range_crime a1, tb_range_location b1
+			  where a1.larceny_count = min(a.larceny_count) 
+				and a1.location_no = b1.location_no limit 0,1) larceny_location, round(min(a.murder_count), 1) murder_count,
+			(select b1.sub_location
+			  from tb_range_crime a1, tb_range_location b1
+			 where a1.murder_count = min(a.murder_count) 
+			   and a1.location_no = b1.location_no limit 0,1) murder_location, round(min(a.robbery_count), 1) robbery_count,
+			(select b1.sub_location
+			   from tb_range_crime a1, tb_range_location b1
+			  where a1.robbery_count = min(a.robbery_count) 
+			    and a1.location_no = b1.location_no limit 0,1) robbery_location, round(min(a.rape_count), 1) rape_count,
+			(select b1.sub_location
+			   from tb_range_crime a1, tb_range_location b1
+			  where a1.rape_count = min(a.rape_count) 
+			    and a1.location_no = b1.location_no limit 0,1) rape_location, round(min(a.violence_count), 1) violence_count,
+			(select b1.sub_location
+			   from tb_range_crime a1, tb_range_location b1
+			  where a1.violence_count = min(a.violence_count) 
+			    and a1.location_no = b1.location_no limit 0,1) violence_location
+		  from tb_range_crime a, tb_range_location b, tb_range_crime c, tb_range_location d
+		 where a.location_no=b.location_no and c.id=#id# and d.location_no=c.location_no and b.location=d.location 
+		 union
+		select '4' num, round(max(a.larceny_count), 1) larceny_count, 
+			(select b1.sub_location
+			   from tb_range_crime a1, tb_range_location b1
+			  where a1.larceny_count = max(a.larceny_count) 
+			    and a1.location_no = b1.location_no limit 0,1) larceny_location, round(max(a.murder_count), 1) murder_count,
+			(select b1.sub_location
+			   from tb_range_crime a1, tb_range_location b1
+			  where a1.murder_count = max(a.murder_count) 
+			    and a1.location_no = b1.location_no limit 0,1) murder_location, round(max(a.robbery_count), 1) robbery_count,
+			(select b1.sub_location
+			   from tb_range_crime a1, tb_range_location b1
+			  where a1.robbery_count = max(a.robbery_count) 
+			    and a1.location_no = b1.location_no limit 0,1) robbery_location, round(max(a.rape_count), 1) rape_count,
+			(select b1.sub_location
+			   from tb_range_crime a1, tb_range_location b1
+			  where a1.rape_count = max(a.rape_count) 
+			    and a1.location_no = b1.location_no limit 0,1) rape_location, round(max(a.violence_count), 1) violence_count,
+			(select b1.sub_location
+			   from tb_range_crime a1, tb_range_location b1
+			  where a1.violence_count = max(a.violence_count) 
+			    and a1.location_no = b1.location_no limit 0,1) violence_location
+		  from tb_range_crime a, tb_range_location b, tb_range_crime c, tb_range_location d
+		 where a.location_no=b.location_no and c.id=#id# and d.location_no=c.location_no and b.location=d.location
+	</statement>
+	
+	<statement id="selectRange_Environment" resultClass="range_Environment" parameterClass="int">
+		select id, category, a.location_no, name, measurement_date, atmosphere, atmosphere_rating, substance, nitrogen_dioxide, ozone, carbon_monoxide, sourcesulfur_dioxide, dust, source, b.location, b.sub_location
+		  from tb_range_environment a, tb_range_location b
+		 where id=#id#
+		   and a.location_no=b.location_no
+	</statement>
+	
+	<statement id="selectRange_Weather" resultClass="range_Weather" parameterClass="int">
+		select b.ultraviolet_rays, b.temperature, b.frostbite, b.discomfort, b.decay, b.source
+		  from tb_range_environment a, tb_range_weather b
+		 where a.id=#id#
+		   and a.location_no = b.location_no
+	</statement>
+	
+	<statement id="selectCalamity_Disaster" resultClass="calamity_Disaster" parameterClass="int">
+		select id, category, address, latitude, longitude, type, facility_name, facility_type, water_system, specified_date, reason, risk, propulsion, organ, organ_tel, source
+		  from tb_calamity_disaster
+		 where id=#id#
+	</statement>
+</sqlMap>

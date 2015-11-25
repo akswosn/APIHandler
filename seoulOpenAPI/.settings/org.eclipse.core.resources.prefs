@@ -1,0 +1,12 @@
+#Mon Nov 12 15:46:13 KST 2012
+eclipse.preferences.version=1
+encoding//src/Daemon_SqlMap.xml=UTF-8
+encoding//src/com/flk/seoulapi/common/Constant.java=UTF-8
+encoding//src/com/flk/seoulapi/common/SqlMapBuilder.java=UTF-8
+encoding//src/com/flk/seoulapi/excutor/EnvironmentOpenApiExcutor.java=UTF-8
+encoding//src/com/flk/seoulapi/excutor/Executor.java=UTF-8
+encoding//src/com/flk/seoulapi/excutor/WeatherOpenApiExcutor.java=UTF-8
+encoding//src/com/flk/seoulapi/vo/FoodCertificationVO.java=UTF-8
+encoding//src/seoulOpenAPI.properties=UTF-8
+encoding/<project>=UTF-8
+encoding/src=UTF-8

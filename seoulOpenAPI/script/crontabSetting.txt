@@ -1,0 +1,8 @@
+# tb_environment job plan : crontab every hour (10 minute)
+10 * * * * /home/safety/demon/seoulOpenAPI/environment.sh
+
+#tb_food_certification job plan : none
+#0 0 0 0 0 /home/safety/demon/seoulOpenAPI/certification.sh
+
+# tb_environment job plan : crontab every hour (10 minute)
+15 * * * * /home/safety/demon/seoulOpenAPI/weather.sh

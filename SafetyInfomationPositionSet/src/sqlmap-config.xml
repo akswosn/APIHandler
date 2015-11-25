@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+    <settings
+       useStatementNamespaces="true"  
+   	/>
+	
+   	<transactionManager type="JDBC" >
+        <dataSource type="SIMPLE">
+	       	<property name="JDBC.Driver" value="com.mysql.jdbc.Driver"/>
+	       	<property name="JDBC.ConnectionURL" value="jdbc:mysql://1.234.45.209:3306/safetyInfomation?useUnicode=true&amp;characterEncoding=utf-8"/>
+	       	<property name="JDBC.Username" value="safety"/>
+	       	<property name="JDBC.Password" value="qwe123"/>
+        </dataSource>
+   	</transactionManager>
+  	
+  	<sqlMap resource="Daemon_SqlMap.xml"/>
+	
+</sqlMapConfig>

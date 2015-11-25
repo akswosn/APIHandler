@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.locale" value="ko_KR" />
+	<constant name="struts.custom.i18n.resources" value="strutsMessage" />
+	<constant name="struts.action.extension" value="do" />
+	<constant name="struts.ui.theme" value="simple" />
+	
+	<package name="safetyInfomation" extends="struts-default,tiles-default">
+		<action name="mapMode" class="com.flk.safety.map.action.MapModeAction" method="mapMode">
+			<result>/mapMode/mapMode.jsp</result>
+			<result name="positionErr">/mapMode/mapPositionErr.jsp</result>
+		</action>
+		<action name="detail" class="com.flk.safety.detail.action.DetailAction" method="detail">
+			<result>/detailMod/jsonData.jsp</result>
+		</action>
+		
+		<action name="search" class="com.flk.safety.search.action.SearchAction" method="search">
+			<result>/searchMode/searchData.jsp</result>
+		</action>
+		<action name="poiData" class="com.flk.safety.map.action.MapDataAction" method="poiData">
+			<result>/mapMode/poiData.jsp</result>
+		</action>
+		<action name="guData" class="com.flk.safety.map.action.MapDataAction" method="guData">
+			<result>/mapMode/guData.jsp</result>
+		</action>
+		<action name="categoryData" class="com.flk.safety.map.action.MapDataAction" method="categoryData">
+			<result>/listMode/categoryData.jsp</result>
+		</action>
+		
+		<!-- 테스트용 -->
+		<action name="mapMode_test" class="com.flk.safety.map.action.MapModeAction" method="mapMode">
+			<result>/mapMode/mapMode_test.jsp</result>
+			<result name="positionErr">/mapMode/mapPositionErr.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Daemon">	
+	<typeAlias alias="calamityDisaster" type="com.daemon.vo.CalamityDisasterVO"/>
+	<typeAlias alias="calamityLandslide" type="com.daemon.vo.CalamityLandslideVO"/>
+	<typeAlias alias="foodCertification" type="com.daemon.vo.FoodCertificationVO"/>
+	<typeAlias alias="foodOriginViolation" type="com.daemon.vo.FoodOriginViolationVO"/>
+	<typeAlias alias="foodSanitaryViolation" type="com.daemon.vo.FoodSanitaryViolationVO"/>
+	<typeAlias alias="sexCrime" type="com.daemon.vo.SexCrimeVO"/>
+	<typeAlias alias="subwayCrime" type="com.daemon.vo.SubwayCrimeVO"/>
+	<typeAlias alias="traffic" type="com.daemon.vo.TrafficVO"/>
+	<typeAlias alias="rangeLocation" type="com.daemon.vo.RangeLocationVO"/>
+	
+	<!-- 재난 - 재해 위험 지구 위도, 경도 데이터 없는 컬럼 가져오기 -->
+	<statement id="selectCalamityDisasterAsNotPosition" resultClass="calamityDisaster">
+		SELECT id, address
+		FROM tb_calamity_disaster
+		WHERE latitude = '' and longitude = ''
+			or latitude = '0.0' and longitude = '0.0'
+			or latitude = '0' and longitude = '0'
+	</statement>
+	<!-- 재난 - 재해 위험 지구 위치 데이터 설정 -->
+	<statement id="setPositionCalamityDisaster" parameterClass="calamityDisaster">
+		UPDATE tb_calamity_disaster
+		SET latitude = #latitude#, longitude = #longitude#
+		WHERE id = #id#
+	</statement>
+	
+	<!-- 재난 - 산사태 위험 지역 위도, 경도 데이터 없는 컬럼 가져오기 -->
+	<statement id="selectCalamityLandslideAsNotPosition" resultClass="calamityLandslide">
+		SELECT id, location
+		FROM tb_calamity_landslide
+		WHERE latitude = '' and longitude = ''
+			or latitude = '0.0' and longitude = '0.0'
+			or latitude = '0' and longitude = '0'
+	</statement>
+	
+	<!-- 재난 - 산사태 위험 지역 위치 데이터 설정 -->
+	<statement id="setPositionCalamityLandslide" parameterClass="calamityLandslide">
+		UPDATE tb_calamity_landslide
+		SET latitude = #latitude#, longitude = #longitude#
+		WHERE id = #id#
+	</statement>
+	
+	<!-- 식품/안전 - 서울 안심먹거리 인증업소   위도, 경도 데이터 없는 컬럼 가져오기-->
+	<statement id="selectFoodCertificationAsNotPosition" resultClass="foodCertification">
+		SELECT id, address
+		FROM tb_food_certification
+		WHERE latitude = '' and longitude = ''
+			or latitude = '0.0' and longitude = '0.0'
+			or latitude = '0' and longitude = '0'
+	</statement>
+	<!-- 식품/안전 - 서울 안심먹거리 인증업소  위치 데이터 설정-->
+	<statement id="setPositionFoodCertification" parameterClass="foodCertification">
+		UPDATE tb_food_certification
+		SET latitude = #latitude#, longitude = #longitude#
+		WHERE id = #id#
+	</statement>
+	
+	
+	<!-- 식품/안전 - 서울 안심먹거리 인증업소   위도, 경도 데이터 없는 컬럼 가져오기-->
+	<statement id="selectFoodOriginViolationAsNotPosition" resultClass="foodOriginViolation">
+		SELECT id, address
+		FROM tb_food_origin_violation
+		WHERE latitude = '' and longitude = ''
+			or latitude = '0.0' and longitude = '0.0'
+			or latitude = '0' and longitude = '0'
+	</statement>
+	<!-- 식품/안전 - 서울 안심먹거리 인증업소  위치 데이터 설정-->
+	<statement id="setPositionFoodOriginViolation" parameterClass="foodOriginViolation">
+		UPDATE tb_food_origin_violation
+		SET latitude = #latitude#, longitude = #longitude#
+		WHERE id = #id#
+	</statement>
+	
+	
+	<!-- 식품/안전 - 서울 안심먹거리 인증업소   위도, 경도 데이터 없는 컬럼 가져오기-->
+	<statement id="selectFoodSanitaryViolationAsNotPosition" resultClass="foodSanitaryViolation">
+		SELECT id, location
+		FROM tb_food_sanitary_violation
+		WHERE latitude = '' and longitude = ''
+			or latitude = '0.0' and longitude = '0.0'
+			or latitude = '0' and longitude = '0'
+	</statement>
+	<!-- 식품/안전 - 서울 안심먹거리 인증업소  위치 데이터 설정-->
+	<statement id="setPositionFoodFoodSanitaryViolation" parameterClass="foodSanitaryViolation">
+		UPDATE tb_food_sanitary_violation
+		SET latitude = #latitude#, longitude = #longitude#
+		WHERE id = #id#
+	</statement>
+	
+	<!-- 범죄 - 성범죄 위도, 경도 데이터 없는 컬럼 가져오기-->
+	<statement id="selectSexCrimeAsNotPosition" resultClass="sexCrime">
+		SELECT id, area, gu, dong
+		FROM tb_sex_crime
+		WHERE latitude = '' and longitude = ''
+			or latitude = '0.0' and longitude = '0.0'
+			or latitude = '0' and longitude = '0'
+	</statement>
+	<!-- 범죄 - 성범죄 위치 데이터 설정-->
+	<statement id="setPositionSexCrime" parameterClass="sexCrime">
+		UPDATE tb_sex_crime
+		SET latitude = #latitude#, longitude = #longitude#
+		WHERE id = #id#
+	</statement>
+	
+	<!-- 범죄 - 지하철역 범죄 위도, 경도 데이터 없는 컬럼 가져오기-->
+	<statement id="selectSubwayCrimeAsNotPosition" resultClass="subwayCrime">
+		SELECT id, station
+		FROM tb_subway_crime
+		WHERE latitude = '' and longitude = ''
+			or latitude = '0.0' and longitude = '0.0'
+			or latitude = '0' and longitude = '0'
+	</statement>
+	<!-- 범죄 - 지하철역 범죄 위치 데이터 설정-->
+	<statement id="setPositionSubwayCrime" parameterClass="subwayCrime">
+		UPDATE tb_subway_crime
+		SET latitude = #latitude#, longitude = #longitude#
+		WHERE id = #id#
+	</statement>
+	
+	<!-- 교통 위도, 경도 데이터 없는 컬럼 가져오기-->
+	<statement id="selectTrafficAsNotPosition" resultClass="traffic">
+		SELECT id, location
+		FROM tb_traffic
+		WHERE latitude = '' and longitude = ''
+			or latitude = '0.0' and longitude = '0.0'
+			or latitude = '0' and longitude = '0'
+	</statement>
+	<!-- 교통 위치 데이터 설정-->
+	<statement id="setPositionTraffic" parameterClass="traffic">
+		UPDATE tb_traffic
+		SET latitude = #latitude#, longitude = #longitude#
+		WHERE id = #id#
+	</statement>
+	
+	
+	<!-- 자치구 지역 정보 위도,경도 이터 없는 컬럼 가져오기 -->
+	<statement id="selectRangeLocationNotPosition" resultClass="rangeLocation">
+		SELECT location_no, location, sub_location
+		FROM tb_range_location
+		WHERE latitude = '' and longitude = ''
+			or latitude = '0.0' and longitude = '0.0'
+			or latitude = '0' and longitude = '0'
+	</statement>
+	
+	<!-- 자치구 지역 정보 위도,경도 위치 데이터 설정 -->
+	<statement id="setPositionRangeLocation" parameterClass="rangeLocation">
+		UPDATE tb_range_location
+		SET latitude = #latitude#, longitude = #longitude#
+		WHERE location_no = #location_no#
+	</statement>
+	
+</sqlMap>
